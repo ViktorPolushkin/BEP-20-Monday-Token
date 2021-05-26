@@ -12,5 +12,5 @@ Share contact informations in here .😁
 
 ## Addresses
 
-* External BNB Wallet: 0x97a902364255429B430cb25E71d17df3CfBc90bf
+* Monday investment fund: 0x97a902364255429B430cb25E71d17df3CfBc90bf
 * Marketing and dev: 0xD5fA8Fe5f8068b8657c3B9Ee7D10b493bC878129
