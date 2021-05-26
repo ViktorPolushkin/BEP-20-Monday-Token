@@ -2,6 +2,10 @@
 
 Share contact informations in here .😁
 
+## Focus
+
+* My email is viktor.polushkin2020@gmail.com
+
 ## Owner Address of Token 
 
 * 0x47163d8B05853686c0174A26aA0118FF671435FB
