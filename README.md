@@ -10,7 +10,11 @@ Share contact informations in here .😁
 
 * 0x47163d8B05853686c0174A26aA0118FF671435FB
 
+## Token requirements
+
 ![MONDAY policy](https://user-images.githubusercontent.com/81155918/119670908-f8b9a600-be41-11eb-9cd9-161edbdeedbe.jpeg)
+
+## MONDAYToken icon
 
 ![MONDAY token logo](https://user-images.githubusercontent.com/81155918/119670941-feaf8700-be41-11eb-980b-32b90e33e727.jpeg)
 
