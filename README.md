@@ -1,14 +1,13 @@
 # BEP-20-Monday-Token
 
-Share contact informations in here .😁
-
-## Focus
-
-* My email is viktor.polushkin2020@gmail.com
-
 ## Owner Address of Token 
 
 * 0x47163d8B05853686c0174A26aA0118FF671435FB
+
+## Extra Addresses
+
+* Monday investment fund: 0x97a902364255429B430cb25E71d17df3CfBc90bf
+* Marketing and dev: 0xD5fA8Fe5f8068b8657c3B9Ee7D10b493bC878129
 
 ## Token requirements
 
@@ -17,8 +16,3 @@ Share contact informations in here .😁
 ## MONDAYToken icon
 
 ![MONDAY token logo](https://user-images.githubusercontent.com/81155918/119670941-feaf8700-be41-11eb-980b-32b90e33e727.jpeg)
-
-## Addresses
-
-* Monday investment fund: 0x97a902364255429B430cb25E71d17df3CfBc90bf
-* Marketing and dev: 0xD5fA8Fe5f8068b8657c3B9Ee7D10b493bC878129
