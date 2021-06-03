@@ -1,5 +1,7 @@
 # BEP-20-Monday-Token
 
+## MONDAY will never be boring again!
+
 ## Token requirements
 
 * 3% distribution
