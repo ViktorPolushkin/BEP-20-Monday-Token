@@ -1,6 +1,165 @@
 // SPDX-License-Identifier: GPL-3.0 or later
 
+/**
+ * Submitted for verification at BscScan.com on 2021-05-28
+ * /
+
+/**
+
+    @@@@@@@@@            @@@@@@@@@@
+    @@@@@@@@@@   @      @@@@@@@@@@@ @
+    @@@@@@@@@@@@  @    @@@@@@@@@@@@ @
+    @@@@@@@@@@@@@@   @@@@@@@@@@@@@@ @
+    @@@@@@@  @@@@@@@@@@@@@  @@@@@@@ @
+    @@@@@@@    @@@@@@@@@    @@@@@@@ @         @@@@@@@          @@@@@  @@@@@@@        @@@@@@@@@@@@               &&&&&           @@@@@@    @@@@@
+    @@@@@@@ @    @@@@@      @@@@@@@ @       @@@@@@@@@@@   @    @@@@@@@@@@@@@@@  @    @@@@@@@@@@@@@@  @         &&&&&&&  @       @@@@@    @@@@@  @
+    @@@@@@@ @     @@@       @@@@@@@ @     @@@@@     @@@@@  @   @@@@@@@@   @@@@@  @   @@@@@@   @@@@@@  @       &&&&&&&&&  @      @@@@@   @@@@@  @
+    @@@@@@@ @               @@@@@@@ @    @@@@        @@@@@  @  @@@@@@    @@@@@@  @   @@@@@@    @@@@@@  @     &&&&&&&&&&&  @      @@@@@@@@@@@@  @
+    @@@@@@@ @               @@@@@@@ @    @@@@@       @@@@@  @  @@@@@  @  @@@@@  @    @@@@@@    @@@@@@  @    @@@@@  @@@@@@  @      @@@@@@@@@@@  @
+    @@@@@@@ @               @@@@@@@ @     @@@@      @@@@@  @   @@@@@  @  @@@@@  @    @@@@@@    @@@@@@  @   @@@@@    @@@@@@  @           @@@@@@  @
+    @@@@@@@ @               @@@@@@@ @      @@@@@@@@@@@@@  @    @@@@@  @  @@@@@  @    @@@@@@   @@@@@@   @  @@@@@@@@@@@@@@@@@  @          @@@@@@  @
+    @@@@@@@ @               @@@@@@@ @        @@@@@@@@    @     @@@@@  @  @@@@@@  @   @@@@@@@@@@@@@@   @  @@@@@@      @@@@@@  @         @@@@@@  @
+            @                       @                   @             @         @                    @          @           @         @@@@@@  @
+     @@@@@@@@                @@@@@@@@         @@@@@@@@@         @@@@@@   @@@@@@@       @@@@@@@@@@@@@@      @@@@@       @@@@@         @@@@@@  @
+                                                                                                                                    @@@@@@  @
+    @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   @
+                                                                                                                                         @
+      @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+
+    # MONDAY
+
+    Great features:
+
+    2% fee auto add to the liquidity pool to lock forever when selling
+    3% fee auto distribute to all holders
+    5% fee auto swaped with BNB and move to Monday Investment fund
+
+    When sell token:
+    5% fee auto burn
+
+    When buy token:
+    5% fee auto swaped with BNB and move to donation wallet.
+
+    Official site: https://monday.land
+
+ */
+
 pragma solidity ^0.8.4;
+
+abstract contract Context {
+
+    // Empty internal constructor, to prevent people from mistakenly deploying
+    // an instance of this contract, which should be used via inheritance.
+    constructor() {}
+
+    /**
+     * @dev Returns message sender
+     */
+    function _msgSender() internal view virtual returns (address) {
+        return payable(msg.sender);
+    }
+
+    /**
+     * @dev Returns message content
+     */
+    function _msgData() internal view virtual returns (bytes memory) {
+        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
+        return msg.data;
+    }
+}
+
+interface IBEP20 {
+
+    /**
+     * @dev Emitted when `value` tokens are moved
+     * from one account (`from`) to another account (`to`).
+     *
+     * Note that `value` may be zero.
+     */
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    /**
+     * @dev Emitted when the allowance of a `spender` for an `owner` is set by
+     * a call to {approve}. `value` is the new allowance.
+     */
+    event Approval(address indexed owner, address indexed spender, uint256 value);
+
+
+    /**
+     * @dev Returns the amount of tokens in existence.
+     */
+    function totalSupply() external view returns (uint256);
+
+    /**
+     * @dev Returns the token decimals.
+     */
+    function decimals() external view returns (uint8);
+
+    /**
+     * @dev Returns the token symbol.
+     */
+    function symbol() external view returns (string memory);
+
+    /**
+     * @dev Returns the token name.
+     */
+    function name() external view returns (string memory);
+
+    /**
+     * @dev Returns the bep token owner.
+     */
+    function getOwner() external view returns (address);
+
+    /**
+     * @dev Returns the amount of tokens owned by `account`.
+     */
+    function balanceOf(address account) external view returns (uint256);
+
+    /**
+     * @dev Moves `amount` tokens from the caller's account to `recipient`.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transfer(address recipient, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Returns the remaining number of tokens that `spender` will be
+     * allowed to spend on behalf of `owner` through {transferFrom}. This is
+     * zero by default.
+     *
+     * This value changes when {approve} or {transferFrom} are called.
+     */
+    function allowance(address owner, address spender) external view returns (uint256);
+
+    /**
+     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * IMPORTANT: Beware that changing an allowance with this method brings the risk
+     * that someone may use both the old and the new allowance by unfortunate
+     * transaction ordering. One possible solution to mitigate this race
+     * condition is to first reduce the spender's allowance to 0 and set the
+     * desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     *
+     * Emits an {Approval} event.
+     */
+    function approve(address spender, uint256 amount) external returns (bool);
+
+    /**
+     * @dev Moves `amount` tokens from `sender` to `recipient` using the
+     * allowance mechanism. `amount` is then deducted from the caller's
+     * allowance.
+     *
+     * Returns a boolean value indicating whether the operation succeeded.
+     *
+     * Emits a {Transfer} event.
+     */
+    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
+}
 
 /**
  * @dev Collection of functions related to the address type
@@ -141,27 +300,18 @@ library Address {
     }
 }
 
-abstract contract Context {
-
-    // Empty internal constructor, to prevent people from mistakenly deploying
-    // an instance of this contract, which should be used via inheritance.
-    constructor() {}
-
-    /**
-     * @dev Returns message sender
-     */
-    function _msgSender() internal view virtual returns (address) {
-        return payable(msg.sender);
-    }
-
-    /**
-     * @dev Returns message content
-     */
-    function _msgData() internal view virtual returns (bytes memory) {
-        this; // silence state mutability warning without generating bytecode - see https://github.com/ethereum/solidity/issues/2691
-        return msg.data;
-    }
-}
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an owner) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the owner account will be the one that deploys the contract. This
+ * can later be changed with {transferOwnership}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyOwner`, which can be applied to your functions to restrict their use to
+ * the owner.
+ */
 
 abstract contract Ownable is Context {
     address private _owner;
@@ -237,99 +387,6 @@ abstract contract Ownable is Context {
     }
 }
 
-interface IBEP20 {
-
-    /**
-     * @dev Emitted when `value` tokens are moved
-     * from one account (`from`) to another account (`to`).
-     *
-     * Note that `value` may be zero.
-     */
-    event Transfer(address indexed from, address indexed to, uint256 value);
-
-    /**
-     * @dev Emitted when the allowance of a `spender` for an `owner` is set by
-     * a call to {approve}. `value` is the new allowance.
-     */
-    event Approval(address indexed owner, address indexed spender, uint256 value);
-
-
-    /**
-     * @dev Returns the amount of tokens in existence.
-     */
-    function totalSupply() external view returns (uint256);
-
-    /**
-     * @dev Returns the token decimals.
-     */
-    function decimals() external view returns (uint8);
-
-    /**
-     * @dev Returns the token symbol.
-     */
-    function symbol() external view returns (string memory);
-
-    /**
-     * @dev Returns the token name.
-     */
-    function name() external view returns (string memory);
-
-    /**
-     * @dev Returns the bep token owner.
-     */
-    function getOwner() external view returns (address);
-
-    /**
-     * @dev Returns the amount of tokens owned by `account`.
-     */
-    function balanceOf(address account) external view returns (uint256);
-
-    /**
-     * @dev Moves `amount` tokens from the caller's account to `recipient`.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event.
-     */
-    function transfer(address recipient, uint256 amount) external returns (bool);
-
-    /**
-     * @dev Returns the remaining number of tokens that `spender` will be
-     * allowed to spend on behalf of `owner` through {transferFrom}. This is
-     * zero by default.
-     *
-     * This value changes when {approve} or {transferFrom} are called.
-     */
-    function allowance(address owner, address spender) external view returns (uint256);
-
-    /**
-     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * IMPORTANT: Beware that changing an allowance with this method brings the risk
-     * that someone may use both the old and the new allowance by unfortunate
-     * transaction ordering. One possible solution to mitigate this race
-     * condition is to first reduce the spender's allowance to 0 and set the
-     * desired value afterwards:
-     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-     *
-     * Emits an {Approval} event.
-     */
-    function approve(address spender, uint256 amount) external returns (bool);
-
-    /**
-     * @dev Moves `amount` tokens from `sender` to `recipient` using the
-     * allowance mechanism. `amount` is then deducted from the caller's
-     * allowance.
-     *
-     * Returns a boolean value indicating whether the operation succeeded.
-     *
-     * Emits a {Transfer} event.
-     */
-    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);
-}
-
 interface IPancakeFactory {
     event PairCreated(address indexed token0, address indexed token1, address pair, uint);
 
@@ -398,7 +455,6 @@ interface IPancakePair {
 
     function initialize(address, address) external;
 }
-
 
 interface IPancakeRouter01 {
     function factory() external pure returns (address);
@@ -547,19 +603,19 @@ contract MondayToken is Ownable, IBEP20 {
     address[] private _excluded;
 
     // Address of Token Owner
-    address _ownerAddress = payable(0x47163d8B05853686c0174A26aA0118FF671435FB);
+    address private _ownerAddress = payable(0xD5fA8Fe5f8068b8657c3B9Ee7D10b493bC878129);
 
     // Address of Monday Investment Fund
-    address _mondayInvestmentFund = payable(0x97a902364255429B430cb25E71d17df3CfBc90bf);
+    address private _mondayInvestmentFund = payable(0x97a902364255429B430cb25E71d17df3CfBc90bf);
 
     // Address of marketing and dev
-    address _marketingDev = payable(0xD5fA8Fe5f8068b8657c3B9Ee7D10b493bC878129);
+    address private _marketingDev = payable(0xD5fA8Fe5f8068b8657c3B9Ee7D10b493bC878129);
 
     // Address of Monday AR Game
-    address _mondayArGame = payable(0x85D117cD3C10a44f26896ebbB84C4181D051fD08);
+    address private _mondayArGame = payable(0x85D117cD3C10a44f26896ebbB84C4181D051fD08);
 
     // Address of Service for sale
-    address _service = payable(0x5cCCb537f3CAf12ca138614a3f5756124cA2094f);
+    address private _service = payable(0x5cCCb537f3CAf12ca138614a3f5756124cA2094f);
 
     uint256 private constant MAX = ~uint256(0);
     uint256 private _tokenTotal = 1 * 10**15 * 10**10;
@@ -586,13 +642,14 @@ contract MondayToken is Ownable, IBEP20 {
     bool inSwapAndLiquify;
     bool public swapAndLiquifyEnabled = true;
 
-    uint256 private _maxTokenHold = 5 * 10**11 * 10**10;
+    uint256 private _maxTokenHold = 1 * 10**15 * 10**10;
     uint256 private _maxTxAmount = 5 * 10**11 * 10**10;
     uint256 private numTokensSellToAddToLiquidity = 5 * 10**10 * 10**10;
 
     event MinTokensBeforeSwapUpdated(uint256 minTokensBeforeSwap);
     event SwapAndLiquifyEnabledUpdated(bool enabled);
     event SwapAndLiquify(uint256 tokensSwapped, uint256 ethReceived, uint256 tokensIntoLiquidity);
+    event SwapAndDonate(uint256 swapTokenBalance, address recipient);
 
     modifier lockTheSwap {
         inSwapAndLiquify = true;
@@ -602,11 +659,13 @@ contract MondayToken is Ownable, IBEP20 {
 
     constructor () {
         _reflectOwned[_ownerAddress] = _reflectTotal;
+
         // PancakeSwap Router address:
         // (BSC testnet) 0xD99D1c33F9fC3444f8101754aBC46c52416550D1
         // (BSC mainnet) V2 0x10ED43C718714eb63d5aA57B78B54704E256024E
         IPancakeRouter02 _pancakeRouter = IPancakeRouter02(0xD99D1c33F9fC3444f8101754aBC46c52416550D1);
-         // Create a pancakeswap pair for this new token
+
+        // Create a pancakeswap pair for this new token
         pancakePair = IPancakeFactory(_pancakeRouter.factory()).createPair(address(this), _pancakeRouter.WETH());
 
         // set the rest of the contract variables
@@ -687,14 +746,6 @@ contract MondayToken is Ownable, IBEP20 {
         return true;
     }
 
-    function _burn(address account, uint amount) internal {
-        require(account != address(0), 'BEP20: burn from the zero address');
-        require(_tokenOwned[account] - amount <= 0, 'BEP20: burn amount exceeds balance');
-
-        _tokenOwned[account] = _tokenOwned[account] - amount;
-        _tokenTotal = _tokenTotal - amount;
-    }
-
     function increaseAllowance(address spender, uint256 addedValue) external virtual returns (bool) {
         _approve(_msgSender(), spender, _allowances[_msgSender()][spender] + addedValue);
         return true;
@@ -746,6 +797,10 @@ contract MondayToken is Ownable, IBEP20 {
         return reflectAmount / currentRate;
     }
 
+    function resetMaxTokenPerWallet() public onlyOwner() {
+        _maxTokenHold = 5 * 10**11 * 10**10;
+    }
+
     function excludeFromReward(address account) public onlyOwner() {
         // require(account != 0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F, 'We can not exclude Pancakeswap router.');
         require(!_isExcluded[account], "Account is already excluded");
@@ -790,30 +845,6 @@ contract MondayToken is Ownable, IBEP20 {
         _liquidityFee = _previousLiquidityFee;
     }
 
-    function _transferBothExcluded(address sender, address recipient, uint256 transferAmount) private {
-        (
-            uint256 reflectAmount,
-            uint256 reflectTransferAmount,
-            uint256 reflectFee,
-            uint256 tokenTransferAmount,
-            uint256 feeDistribute,
-            uint256 feeFundOrBurn,
-            uint256 feeDev,
-            uint256 feeLiquidity
-        ) = _getValues(transferAmount);
-
-        _tokenOwned[sender] = _tokenOwned[sender] - transferAmount;
-        _reflectOwned[sender] = _reflectOwned[sender] - reflectAmount;
-        _tokenOwned[recipient] = _tokenOwned[recipient] + tokenTransferAmount;
-        _reflectOwned[recipient] = _reflectOwned[recipient] + reflectTransferAmount;
-
-        _takeLiquidity(feeLiquidity);
-
-        _reflectFee(reflectFee, feeDistribute + feeFundOrBurn + feeDev);
-
-        emit Transfer(sender, recipient, tokenTransferAmount);
-    }
-
     function excludeFromFee(address account) public onlyOwner {
         _isExcludedFromFee[account] = true;
     }
@@ -850,11 +881,6 @@ contract MondayToken is Ownable, IBEP20 {
     function rescueBNBFromContract() external onlyOwner {
         address _owner = payable(_msgSender());
         payable(_owner).transfer(address(this).balance);
-    }
-
-    function _reflectFee(uint256 reflectFee, uint256 feeTotal) private {
-        _reflectTotal = _reflectTotal - reflectFee;
-        _tokenFeeTotal = _tokenFeeTotal + feeTotal;
     }
 
     function _getValues(
@@ -1005,15 +1031,11 @@ contract MondayToken is Ownable, IBEP20 {
         require(from != address(0), "ERC20: transfer from the zero address");
         require(to != address(0), "ERC20: transfer to the zero address");
         require(amount > 0, "Transfer amount must be greater than zero");
-        require(_tokenOwned[to] > _maxTokenHold, "Recipient's wallet will exceed max token hold 500,000,000 MONDAY with your amount");
 
-        bool isBuy = false;
-        if (from.isContract()) {
-            isBuy = true;
-        }
-
-        if(from != owner() && to != owner())
+        if(from != owner() && to != owner()) {
             require(amount <= _maxTxAmount, "Transfer amount exceeds the maxTxAmount.");
+            require(_tokenOwned[to] + amount <= _maxTokenHold, "Recipient's wallet will exceed max token hold 500,000,000 MONDAY with your amount");
+        }
 
         // is the token balance of this contract address over the min number of
         // tokens that we need to initiate a swap + liquidity lock?
@@ -1021,8 +1043,7 @@ contract MondayToken is Ownable, IBEP20 {
         // also, don't swap & liquify if sender is uniswap pair.
         uint256 contractTokenBalance = balanceOf(address(this));
 
-        if(contractTokenBalance >= _maxTxAmount)
-        {
+        if(contractTokenBalance >= _maxTxAmount) {
             contractTokenBalance = _maxTxAmount;
         }
 
@@ -1035,16 +1056,16 @@ contract MondayToken is Ownable, IBEP20 {
         ) {
             contractTokenBalance = numTokensSellToAddToLiquidity;
             //add liquidity
-            swapAndLiquify(contractTokenBalance);
-        }
 
-        if (isBuy) {
-            swapTokensForFund(calculateFundOrBurnFee(amount), _mondayInvestmentFund);
-        } else {
-            _burn(from, calculateFundOrBurnFee(amount));
-        }
+            (,,,,, uint256 feeFundOrBurn, uint256 feeDev,) = _getValues(amount);
 
-        swapTokensForFund(calculateDevFee(amount), _marketingDev);
+            bool isBurn = false;
+            if (from.isContract()) {
+                isBurn = true;
+            }
+
+            swapAndLiquify(contractTokenBalance, feeFundOrBurn, feeDev, isBurn);
+        }
 
         //indicates if fee should be deducted from transfer
         bool takeFee = true;
@@ -1058,45 +1079,44 @@ contract MondayToken is Ownable, IBEP20 {
         _tokenTransfer(from, to, amount, takeFee);
     }
 
-    function swapAndLiquify(uint256 contractTokenBalance) private lockTheSwap {
+    function swapAndLiquify(uint256 contractTokenBalance, uint256 donateFund, uint256 donateDev, bool burn) private lockTheSwap {
         // split the contract balance into halves
         uint256 half = contractTokenBalance / 2;
         uint256 otherHalf = contractTokenBalance - half;
 
-        // capture the contract's current ETH balance.
-        // this is so that we can capture exactly the amount of ETH that the
-        // swap creates, and not make the liquidity event include any ETH that
-        // has been manually sent to the contract
         uint256 initialBalance = address(this).balance;
 
-        // swap tokens for ETH
-        swapTokensForBNB(half); // <- this breaks the ETH -> HATE swap when swap+liquify is triggered
+        uint256 rating = 0;
+        if (burn) {
+            rating = (half + donateDev) / half;
 
-        // how much ETH did we just swap into?
+            swapTokensForBNB(half + donateDev); // <- this breaks the ETH -> HATE swap when swap+liquify is triggered
+        } else {
+            rating = (half + donateDev + donateFund) / half;
+
+            swapTokensForBNB(half + donateDev + donateFund); // <- this breaks the ETH -> HATE swap when swap+liquify is triggered
+        }
+
+        // how much BNB did we earn from swap?
         uint256 newBalance = address(this).balance - initialBalance;
+        // how much BNB did we swap into?
+        uint256 balanceHalf = newBalance / rating;
+        uint256 donateBalance = newBalance - balanceHalf;
+
+        if (burn) {
+            TransferBnbToExternalAddress(_marketingDev, donateBalance);
+        } else {
+            uint256 fundBalance = donateBalance / 2;
+            uint256 devBalance = donateBalance - fundBalance;
+
+            TransferBnbToExternalAddress(_mondayInvestmentFund, fundBalance);
+            TransferBnbToExternalAddress(_marketingDev, devBalance);
+        }
 
         // add liquidity to uniswap
-        addLiquidity(otherHalf, newBalance);
+        addLiquidity(otherHalf, balanceHalf);
 
         emit SwapAndLiquify(half, newBalance, otherHalf);
-    }
-
-    function swapTokensForFund(uint256 tokenAmount, address externalAddress) private {
-        // generate the pancakeswap pair path of token -> weth
-        address[] memory path = new address[](2);
-        path[0] = address(this);
-        path[1] = pancakeRouter.WETH();
-
-        _approve(address(this), address(pancakeRouter), tokenAmount);
-
-        // make the swap
-        pancakeRouter.swapExactTokensForETHSupportingFeeOnTransferTokens(
-            tokenAmount,
-            0, // accept any amount of BNB
-            path,
-            externalAddress,
-            block.timestamp
-        );
     }
 
     function swapTokensForBNB(uint256 tokenAmount) private {
@@ -1168,7 +1188,11 @@ contract MondayToken is Ownable, IBEP20 {
 
         _takeLiquidity(feeLiquidity);
 
-        _reflectFee(reflectFee, feeDistribute + feeDev + feeFundOrBurn);
+        if (sender.isContract()) {
+            _reflectFee(reflectFee, feeDistribute, feeDev, feeFundOrBurn, false);
+        } else {
+            _reflectFee(reflectFee, feeDistribute, feeDev, feeFundOrBurn, true);
+        }
 
         emit Transfer(sender, recipient, tokenTransferAmount);
     }
@@ -1191,7 +1215,11 @@ contract MondayToken is Ownable, IBEP20 {
 
         _takeLiquidity(feeLiquidity);
 
-        _reflectFee(reflectFee, feeDistribute + feeDev + feeFundOrBurn);
+        if (sender.isContract()) {
+            _reflectFee(reflectFee, feeDistribute, feeDev, feeFundOrBurn, false);
+        } else {
+            _reflectFee(reflectFee, feeDistribute, feeDev, feeFundOrBurn, true);
+        }
 
         emit Transfer(sender, recipient, tokenTransferAmount);
     }
@@ -1214,9 +1242,54 @@ contract MondayToken is Ownable, IBEP20 {
 
         _takeLiquidity(feeLiquidity);
 
-        _reflectFee(reflectFee, feeDistribute + feeDev + feeFundOrBurn);
+        if (sender.isContract()) {
+            _reflectFee(reflectFee, feeDistribute, feeDev, feeFundOrBurn, false);
+        } else {
+            _reflectFee(reflectFee, feeDistribute, feeDev, feeFundOrBurn, true);
+        }
 
         emit Transfer(sender, recipient, tokenTransferAmount);
+    }
+
+    function _transferBothExcluded(address sender, address recipient, uint256 transferAmount) private {
+        (
+            uint256 reflectAmount,
+            uint256 reflectTransferAmount,
+            uint256 reflectFee,
+            uint256 tokenTransferAmount,
+            uint256 feeDistribute,
+            uint256 feeFundOrBurn,
+            uint256 feeDev,
+            uint256 feeLiquidity
+        ) = _getValues(transferAmount);
+
+        _tokenOwned[sender] = _tokenOwned[sender] - transferAmount;
+        _reflectOwned[sender] = _reflectOwned[sender] - reflectAmount;
+        _tokenOwned[recipient] = _tokenOwned[recipient] + tokenTransferAmount;
+        _reflectOwned[recipient] = _reflectOwned[recipient] + reflectTransferAmount;
+
+        _takeLiquidity(feeLiquidity);
+
+        if (sender.isContract()) {
+            _reflectFee(reflectFee, feeDistribute, feeDev, feeFundOrBurn, false);
+        } else {
+            _reflectFee(reflectFee, feeDistribute, feeDev, feeFundOrBurn, true);
+        }
+
+        emit Transfer(sender, recipient, tokenTransferAmount);
+    }
+
+    function TransferBnbToExternalAddress(address recipient, uint256 amount) private {
+        payable(recipient).transfer(amount);
+    }
+
+    function _reflectFee(uint256 reflectFee, uint256 feeDistribute, uint256 feeDev, uint256 feeFundOrBurn, bool burn) private {
+        _reflectTotal = _reflectTotal - reflectFee;
+        _tokenFeeTotal = _tokenFeeTotal + feeDistribute + feeDev + feeFundOrBurn;
+
+        if (burn) {
+            _tokenTotal = _tokenTotal - feeFundOrBurn;
+        }
     }
 
 }
